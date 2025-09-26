@@ -1,0 +1,163 @@
+import { create } from 'zustand';
+import axios from '../api/axios';
+
+const useUserStore = create((set, get) => {
+  return {
+    users: [],
+    currentUser: null,
+    isLoading: false,
+    error: null,
+    
+    // Fetch all users (admin only)
+    fetchUsers: async () => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await axios.get('/users');
+        set({ users: response.data, isLoading: false });
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        set({ 
+          isLoading: false, 
+          error: error.response?.data?.message || 'Failed to fetch users' 
+        });
+        return null;
+      }
+    },
+    
+    // Fetch a single user by ID
+    fetchUserById: async (userId) => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await axios.get(`/users/${userId}`);
+        set({ currentUser: response.data, isLoading: false });
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        set({ 
+          isLoading: false, 
+          error: error.response?.data?.message || 'Failed to fetch user' 
+        });
+        return null;
+      }
+    },
+    
+    // Create a new user (admin only)
+    createUser: async (userData) => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await axios.post('/users/create', userData);
+        set(state => ({ 
+          users: [...state.users, response.data.user], 
+          isLoading: false 
+        }));
+        return response.data;
+      } catch (error) {
+        console.error('Error creating user:', error);
+        // Enhanced error handling to capture more details
+        const errorMessage = error.response?.data?.message || 
+                            (error.response?.data?.error) || 
+                            (error.response?.data?.errors && JSON.stringify(error.response.data.errors)) ||
+                            'Failed to create user';
+        
+        console.log('Detailed error info:', {
+          status: error.response?.status,
+          data: error.response?.data,
+          message: errorMessage
+        });
+        
+        set({ 
+          isLoading: false, 
+          error: errorMessage
+        });
+        return null;
+      }
+    },
+    
+    // Update user details
+    updateUser: async (userId, userData) => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await axios.patch(`/users/${userId}`, userData);
+        set(state => ({
+          users: state.users.map(user => 
+            user._id === userId ? { ...user, ...response.data } : user
+          ),
+          currentUser: state.currentUser?._id === userId ? { ...state.currentUser, ...response.data } : state.currentUser,
+          isLoading: false
+        }));
+        return response.data;
+      } catch (error) {
+        console.error('Error updating user:', error);
+        set({ 
+          isLoading: false, 
+          error: error.response?.data?.message || 'Failed to update user' 
+        });
+        return null;
+      }
+    },
+    
+    // Deactivate a user (replaces delete functionality)
+    deactivateUser: async (userId) => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await axios.patch(`/users/${userId}/deactivate`);
+        set(state => ({
+          users: state.users.map(user => 
+            user._id === userId ? {...user, status: 'inactive'} : user
+          ),
+          isLoading: false
+        }));
+        return response.data;
+      } catch (error) {
+        console.error('Error deactivating user:', error);
+        set({ 
+          isLoading: false, 
+          error: error.response?.data?.message || 'Failed to deactivate user' 
+        });
+        return false;
+      }
+    },
+    
+    // Reactivate a user
+    reactivateUser: async (userId) => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await axios.patch(`/users/${userId}/reactivate`);
+        set(state => ({
+          users: state.users.map(user => 
+            user._id === userId ? {...user, status: 'active'} : user
+          ),
+          isLoading: false
+        }));
+        return response.data;
+      } catch (error) {
+        console.error('Error reactivating user:', error);
+        set({ 
+          isLoading: false, 
+          error: error.response?.data?.message || 'Failed to reactivate user' 
+        });
+        return false;
+      }
+    },
+    
+    // Delete a user (keeping for backward compatibility, but mark as deprecated)
+    // Consider removing this method in future updates
+    deleteUser: async (userId) => {
+      console.warn('deleteUser is deprecated. Use deactivateUser instead.');
+      return get().deactivateUser(userId);
+    },
+    
+    // Clear current user
+    clearCurrentUser: () => {
+      set({ currentUser: null });
+    },
+    
+    // Clear errors
+    clearErrors: () => {
+      set({ error: null });
+    }
+  };
+});
+
+export default useUserStore;
