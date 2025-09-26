@@ -13,7 +13,11 @@ import {
 import TaskCard from './TaskCard';
 import TaskDetailView from './TaskDetailView';
 
+<<<<<<< HEAD
 const TaskList = ({ tasks, onEditTask, epicId, canManageTasks = true }) => {
+=======
+const TaskList = ({ tasks, onEditTask, epicId }) => {
+>>>>>>> dhruv
   const dispatch = useDispatch();
   const [filterStatus, setFilterStatus] = useState('');
   const [filterPriority, setFilterPriority] = useState('');
@@ -187,7 +191,10 @@ const TaskList = ({ tasks, onEditTask, epicId, canManageTasks = true }) => {
             onViewTask={handleViewTask}
             onEditTask={onEditTask}
             onDeleteTask={handleDeleteTask}
+<<<<<<< HEAD
             canManageTasks={canManageTasks}
+=======
+>>>>>>> dhruv
           />
         ))}
       </div>

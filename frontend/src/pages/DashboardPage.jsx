@@ -3,8 +3,11 @@ import { Navigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import AdminDashboard from '../components/AdminDashboard';
 import UserDashboard from '../components/UserDashboard';
+<<<<<<< HEAD
 import ProjectManagerDashboard from '../components/ProjectManagerDashboard';
 import ProjectLeadDashboard from '../components/ProjectLeadDashboard';
+=======
+>>>>>>> dhruv
 
 const DashboardPage = () => {
   const { isAuthenticated, user } = useAuthStore();
@@ -34,6 +37,7 @@ const DashboardPage = () => {
     );
   }
 
+<<<<<<< HEAD
   // Route to appropriate dashboard based on user role
   const renderDashboard = () => {
     switch (user?.role) {
@@ -50,6 +54,9 @@ const DashboardPage = () => {
   };
 
   return renderDashboard();
+=======
+  return user?.role === 'Admin' ? <AdminDashboard /> : <UserDashboard />;
+>>>>>>> dhruv
 };
 
 export default DashboardPage;

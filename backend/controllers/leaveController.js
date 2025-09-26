@@ -195,7 +195,6 @@ exports.addRemark = async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to update remarks" });
   }
 };
-
 // In your leaveController.js
 exports.getLeaveById = async (req, res) => {
   try {

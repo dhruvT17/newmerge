@@ -7,6 +7,8 @@ const {
   updateUser,
   deactivateUser,
   reactivateUser,
+  getMe,
+  registerFaceData,
 } = require("../controllers/userController");
 const{ verifyToken, isAdmin } = require("../middleware/authMiddleware");
 
@@ -21,7 +23,9 @@ router.get("/", verifyToken, getAllUsers);
 router.get("/:id", verifyToken, getUserById);
 router.post("/create", verifyToken, isAdmin, createUser);
 router.patch("/:id", verifyToken, updateUser);
-
+// Current user + face registration
+router.get("/me/profile", verifyToken, getMe);
+router.post("/me/face-register", verifyToken, registerFaceData);
 // Replace delete with deactivate/reactivate
 router.patch("/:id/deactivate", verifyToken, isAdmin, deactivateUser);
 router.patch("/:id/reactivate", verifyToken, isAdmin, reactivateUser);

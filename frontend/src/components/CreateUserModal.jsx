@@ -3,8 +3,14 @@ import useUserStore from '../store/userStore';
 import { FaExclamationCircle } from 'react-icons/fa';
 
 const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }) => {
+<<<<<<< HEAD
     const [email, setEmail] = useState('');
   const [role, setRole] = useState('Employee'); 
+=======
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState(''); 
+>>>>>>> dhruv
   const [name, setName] = useState(''); 
   const [password, setPassword] = useState('');
   // Remove status state
@@ -16,7 +22,12 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
   // Load user data when in edit mode
   useEffect(() => {
     if (user) {
+<<<<<<< HEAD
             setEmail(user.email || '');
+=======
+      setUsername(user.credentialId?.username || user.username || '');
+      setEmail(user.email || '');
+>>>>>>> dhruv
       setName(user.name || '');
       setRole(user.credentialId?.role || user.role || '');
       setPassword('');
@@ -28,6 +39,18 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
   const validateForm = () => {
     const newErrors = {};
 
+<<<<<<< HEAD
+=======
+    // Username validation
+    if (!username.trim()) {
+      newErrors.username = 'Username is required';
+    } else if (username.length < 3) {
+      newErrors.username = 'Username must be at least 3 characters';
+    } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      newErrors.username = 'Username can only contain letters, numbers, and underscores';
+    }
+
+>>>>>>> dhruv
     // Full Name validation
     if (!name.trim()) {
       newErrors.name = 'Full name is required';
@@ -70,12 +93,17 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
     }
     
     const userData = { 
+<<<<<<< HEAD
+=======
+      username, 
+>>>>>>> dhruv
       name, 
       email,
       role,
       // Remove status from userData
     };
     
+<<<<<<< HEAD
     // Include password: required in create, optional in edit
     if (isEditMode) {
       if (password && password.length >= 6) {
@@ -83,6 +111,10 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
       }
     } else {
       // Create mode: password is required and validated above
+=======
+    // Only include password if it's provided or we're creating a new user
+    if (password || !isEditMode) {
+>>>>>>> dhruv
       userData.password = password;
     }
     
@@ -100,8 +132,14 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
       result = await createUser(userData);
       if (result && !error) {
         // Reset form
+<<<<<<< HEAD
         setEmail('');
         setRole('Employee');
+=======
+        setUsername('');
+        setEmail('');
+        setRole('');
+>>>>>>> dhruv
         setName('');
         setPassword('');
         // Notify parent component
@@ -140,7 +178,31 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<<<<<<< HEAD
             
+=======
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Username</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className={`w-full px-4 py-2.5 rounded-lg border ${
+                    errors.username ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-[#8BBAFC]/30 focus:border-[#418EFD] focus:ring-[#418EFD]/20'
+                  } transition-all bg-white hover:bg-[#418EFD]/5`}
+                  placeholder="Enter username"
+                />
+                {errors.username && (
+                  <p className="mt-1 text-sm text-red-500 flex items-center">
+                    <FaExclamationCircle className="w-4 h-4 mr-1" />
+                    {errors.username}
+                  </p>
+                )}
+              </div>
+            </div>
+
+>>>>>>> dhruv
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Full Name</label>
               <div className="relative">
@@ -148,7 +210,10 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+<<<<<<< HEAD
                   required
+=======
+>>>>>>> dhruv
                   className={`w-full px-4 py-2.5 rounded-lg border ${
                     errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-[#8BBAFC]/30 focus:border-[#418EFD] focus:ring-[#418EFD]/20'
                   } transition-all bg-white hover:bg-[#418EFD]/5`}
@@ -170,7 +235,10 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+<<<<<<< HEAD
                   required
+=======
+>>>>>>> dhruv
                   className={`w-full px-4 py-2.5 rounded-lg border ${
                     errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-[#8BBAFC]/30 focus:border-[#418EFD] focus:ring-[#418EFD]/20'
                   } transition-all bg-white hover:bg-[#418EFD]/5`}
@@ -221,6 +289,10 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, user, onUserUpdated }
                 >
                   <option value="">Select a role</option>
                   <option value="Employee">Employee</option>
+<<<<<<< HEAD
+=======
+                  <option value="Admin">Admin</option>
+>>>>>>> dhruv
                   <option value="Project Manager">Project Manager</option>
                   <option value="Project Lead">Project Lead</option>
                 </select>

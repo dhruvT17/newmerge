@@ -7,7 +7,10 @@ import { fetchProjectById } from '../../../store/projectStore';
 import useUserStore from '../../../store/userStore';
 import { FaPlus, FaArrowLeft, FaEdit, FaTrash, FaExclamationCircle, FaCalendarAlt, FaUser, FaFlag } from 'react-icons/fa';
 import EpicForm from './EpicForm';
+<<<<<<< HEAD
 import useAuthStore from '../../../store/authStore';
+=======
+>>>>>>> dhruv
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
 
@@ -17,11 +20,14 @@ const KanbanBoard = () => {
   const dispatch = useDispatch();
   
   const { epics, isLoading: epicsLoading, error: epicsError } = useSelector(state => state.kanban);
+<<<<<<< HEAD
 
   // Current authenticated user
   const { user } = useAuthStore();
   const canManageTasks = user?.role === 'Project Lead';
   const isProjectManager = user?.role === 'Project Manager';
+=======
+>>>>>>> dhruv
   const { tasks, isLoading: tasksLoading } = useSelector(state => state.tasks);
   const { currentProject } = useSelector(state => state.projects);
   
@@ -62,19 +68,29 @@ const KanbanBoard = () => {
     }
   };
 
+<<<<<<< HEAD
   const handleAddTask = (epic) => {
     setCurrentTask(null);
     setIsEditingTask(false);
     // Store full epic so we can access team_members for assignee restriction
     setCurrentEpic(epic);
+=======
+  const handleAddTask = (epicId) => {
+    setCurrentTask(null);
+    setIsEditingTask(false);
+    setCurrentEpic({ epic_id: epicId });
+>>>>>>> dhruv
     setShowTaskForm(true);
   };
 
   const handleEditTask = (task) => {
     setCurrentTask(task);
+<<<<<<< HEAD
     // Ensure currentEpic is set to the epic of this task so TaskForm receives correct teamMembers
     const epicForTask = epics.find(e => e.epic_id === task.epic_id);
     if (epicForTask) setCurrentEpic(epicForTask);
+=======
+>>>>>>> dhruv
     setIsEditingTask(true);
     setShowTaskForm(true);
   };
@@ -89,10 +105,15 @@ const KanbanBoard = () => {
     setCurrentTask(null);
   };
 
+<<<<<<< HEAD
   // Support both epic._id and epic.epic_id to cover legacy data, compare as strings
   const getTasksForEpic = (epic) => {
     const epicIds = [epic?._id, epic?.epic_id].filter(Boolean).map(id => String(id));
     return tasks.filter(task => epicIds.includes(String(task.epic_id)));
+=======
+  const getTasksForEpic = (epicId) => {
+    return tasks.filter(task => task.epic_id === epicId);
+>>>>>>> dhruv
   };
 
   const getTeamLeadName = (teamLeadId) => {
@@ -208,7 +229,11 @@ const KanbanBoard = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {epics.map(epic => (
+<<<<<<< HEAD
             <div key={epic._id || epic.epic_id} className="bg-white rounded-xl shadow-md overflow-hidden border border-[#8BBAFC] flex flex-col h-full hover:shadow-lg transition-shadow">
+=======
+            <div key={epic.epic_id} className="bg-white rounded-xl shadow-md overflow-hidden border border-[#8BBAFC] flex flex-col h-full hover:shadow-lg transition-shadow">
+>>>>>>> dhruv
               <div className="bg-[#418EFD] text-white p-4 flex justify-between items-center">
                 <h2 className="text-lg font-semibold truncate">{epic.name}</h2>
                 <div className="flex space-x-3">
@@ -236,7 +261,11 @@ const KanbanBoard = () => {
                       {epic.status || 'Not Set'}
                     </span>
                     <span className="text-sm text-[#4A4A57] font-medium">
+<<<<<<< HEAD
                       {getTasksForEpic(epic).length} Tasks
+=======
+                      {getTasksForEpic(epic.epic_id).length} Tasks
+>>>>>>> dhruv
                     </span>
                   </div>
                   
@@ -267,6 +296,7 @@ const KanbanBoard = () => {
                     </div>
                   )}
                 </div>
+<<<<<<< HEAD
 
                 {/* Team members assigned to this epic */}
                 <div className="mt-3">
@@ -315,6 +345,23 @@ const KanbanBoard = () => {
                     </p>
                   </div>
                 )}
+=======
+                
+                <div className="border-t border-[#8BBAFC]/50 pt-4 mt-2">
+                  <TaskList 
+                    tasks={getTasksForEpic(epic.epic_id)} 
+                    onEditTask={handleEditTask} 
+                    epicId={epic.epic_id}
+                  />
+                </div>
+                
+                <button
+                  onClick={() => handleAddTask(epic.epic_id)}
+                  className="mt-4 w-full bg-[#418EFD]/10 hover:bg-[#418EFD]/20 text-[#418EFD] font-medium py-2 px-4 rounded-lg flex items-center justify-center transition-colors"
+                >
+                  <FaPlus className="mr-2" /> Add Task
+                </button>
+>>>>>>> dhruv
               </div>
             </div>
           ))}
@@ -334,10 +381,16 @@ const KanbanBoard = () => {
         isOpen={showTaskForm}
         onClose={handleCloseTaskForm}
         projectId={projectId}
+<<<<<<< HEAD
         epicId={currentEpic?._id || currentEpic?.epic_id}
         task={currentTask}
         isEditing={isEditingTask}
         teamMembers={currentEpic?.team_members}
+=======
+        epicId={currentEpic?.epic_id}
+        task={currentTask}
+        isEditing={isEditingTask}
+>>>>>>> dhruv
       />
     </div>
   );

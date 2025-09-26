@@ -24,7 +24,6 @@ exports.getPMTasks = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching tasks for Project Manager', error: error.message });
     }
 };
-
 // ✅ Create a new task
 exports.createTask = async (req, res) => {    
     try {
@@ -52,7 +51,6 @@ exports.createTask = async (req, res) => {
         const now = new Date();
         newTask.status_last_changed_at = now;
         newTask.status_history = [{ status: newTask.status, changed_by: req.user._id, changed_at: now }];
-
         await newTask.save();
 
         // Update the project with the new task reference

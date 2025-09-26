@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import useUserStore from '../store/userStore';
 import { FaUsers, FaSpinner, FaProjectDiagram, FaCalendarAlt, FaBuilding, FaChartBar, 
   FaCheckCircle, FaHourglassHalf, FaTimesCircle, FaTachometerAlt, FaChartPie, 
+<<<<<<< HEAD
   FaArrowUp, FaArrowDown, FaFilter, FaSearch, FaEllipsisV, FaUserTie, FaEye, FaEdit, FaPlus } from 'react-icons/fa';
+=======
+  FaArrowUp, FaArrowDown, FaFilter, FaSearch, FaEllipsisV } from 'react-icons/fa';
+>>>>>>> dhruv
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../store/projectStore';
 import { fetchLeaves } from '../store/leaveStore';
@@ -39,11 +43,14 @@ const AdminDashboard = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCard, setSelectedCard] = useState(null);
+<<<<<<< HEAD
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [selectedManagerId, setSelectedManagerId] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [showCompletedProjectsAlert, setShowCompletedProjectsAlert] = useState(true);
+=======
+>>>>>>> dhruv
 
   // Load data from stores
   useEffect(() => {
@@ -176,6 +183,7 @@ const AdminDashboard = () => {
 
   // Calculate leave statistics
   const getPendingLeaves = () => {
+<<<<<<< HEAD
     return leaves?.filter(leave => leave.status === 'Pending')?.length || 0;
   };
 
@@ -185,6 +193,17 @@ const AdminDashboard = () => {
   
   const getRejectedLeaves = () => {
     return leaves?.filter(leave => leave.status === 'Rejected')?.length || 0;
+=======
+    return leaves?.filter(leave => leave.status?.toLowerCase() === 'pending')?.length || 0;
+  };
+
+  const getApprovedLeaves = () => {
+    return leaves?.filter(leave => leave.status?.toLowerCase() === 'approved')?.length || 0;
+  };
+  
+  const getRejectedLeaves = () => {
+    return leaves?.filter(leave => leave.status?.toLowerCase() === 'rejected')?.length || 0;
+>>>>>>> dhruv
   };
   
   // Calculate project statistics
@@ -198,6 +217,7 @@ const AdminDashboard = () => {
   const getActiveUsers = () => {
     return users.filter(user => user.status === 'active').length;
   };
+<<<<<<< HEAD
   
   // Get completed projects that need reassignment
   const getCompletedProjectsNeedingReassignment = () => {
@@ -220,6 +240,8 @@ const AdminDashboard = () => {
   const handleCloseCompletedProjectsAlert = () => {
     setShowCompletedProjectsAlert(false);
   };
+=======
+>>>>>>> dhruv
 
   // Chart options
   const pieChartOptions = {
@@ -282,6 +304,7 @@ const AdminDashboard = () => {
     setSelectedCard(selectedCard === cardId ? null : cardId);
   };
 
+<<<<<<< HEAD
   // Project Manager assignment handler
   const handleAssignProjectManager = (projectId) => {
     // Find the project to check its status
@@ -588,6 +611,11 @@ const AdminDashboard = () => {
           </div>
         </header>
         
+=======
+  return (
+    <div className="p-6 bg-white min-h-screen">
+      <div className="max-w-7xl mx-auto">
+>>>>>>> dhruv
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Employees Card */}
@@ -804,7 +832,11 @@ const AdminDashboard = () => {
         </div>
         
         {/* Trend Chart Section */}
+<<<<<<< HEAD
         {activeTab === 'overview' && isDataLoaded && chartData.trendData && (
+=======
+        {isDataLoaded && chartData.trendData && (
+>>>>>>> dhruv
           <div className="mb-8 bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold flex items-center text-gray-800">
@@ -826,7 +858,11 @@ const AdminDashboard = () => {
         )}
         
         {/* Charts Section */}
+<<<<<<< HEAD
         {activeTab === 'overview' && isDataLoaded && chartData.leaveData && chartData.projectData && (
+=======
+        {isDataLoaded && chartData.leaveData && chartData.projectData && (
+>>>>>>> dhruv
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold flex items-center text-gray-800">
@@ -854,6 +890,7 @@ const AdminDashboard = () => {
           </div>
         )}
         
+<<<<<<< HEAD
         {/* Projects Tab */}
         {activeTab === 'projects' && (
           <div className="bg-white rounded-lg shadow-sm border">
@@ -993,6 +1030,10 @@ const AdminDashboard = () => {
 
         {/* Detailed Statistics Section */}
         {activeTab === 'overview' && isDataLoaded && !usersLoading && !projectsLoading && !leavesLoading && !clientsLoading && (
+=======
+        {/* Detailed Statistics Section */}
+        {isDataLoaded && !usersLoading && !projectsLoading && !leavesLoading && !clientsLoading && (
+>>>>>>> dhruv
           <div className="mt-10">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold flex items-center text-gray-800">
@@ -1043,6 +1084,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
+<<<<<<< HEAD
                 
                 {/* Project Distribution */}
                 <div className="bg-gray-50 rounded-lg p-5">
@@ -1084,6 +1126,8 @@ const AdminDashboard = () => {
                   </div>
                 </div>
                 
+=======
+>>>>>>> dhruv
                 {/* Leave Status */}
                 <div className="bg-gray-50 rounded-lg p-5">
                   <h3 className="font-medium text-gray-700 mb-4 flex items-center">
@@ -1142,6 +1186,7 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
+<<<<<<< HEAD
 
         {/* Project Manager Assignment Modal */}
         {showAssignModal && (
@@ -1189,9 +1234,15 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
+=======
+>>>>>>> dhruv
       </div>
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default AdminDashboard;
+=======
+export default AdminDashboard;
+>>>>>>> dhruv

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import axios from '../../../api/axios';
+=======
+>>>>>>> dhruv
 import { useDispatch, useSelector } from 'react-redux';
 import { createTask, updateTask, fetchEpicTasks } from '../../../store/taskStore';
 import useUserStore from '../../../store/userStore';
@@ -17,12 +20,17 @@ import {
 } from 'react-icons/fa';
 import Select from 'react-select';
 
+<<<<<<< HEAD
 const TaskForm = ({ isOpen, onClose, projectId, epicId, task, isEditing, teamMembers: epicTeamMembers = [] }) => {
+=======
+const TaskForm = ({ isOpen, onClose, projectId, epicId, task, isEditing }) => {
+>>>>>>> dhruv
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector(state => state.tasks);
   
   // Use Zustand store for users
   const { users, fetchUsers } = useUserStore();
+<<<<<<< HEAD
 
   // For Project Lead: fetched list of team members for the project lead
   const [fetchedTeamMembers, setFetchedTeamMembers] = useState([]);
@@ -40,6 +48,8 @@ const TaskForm = ({ isOpen, onClose, projectId, epicId, task, isEditing, teamMem
       fetchTeamMembers();
     }
   }, [isOpen]);
+=======
+>>>>>>> dhruv
   
   const [formData, setFormData] = useState({
     title: '',
@@ -286,6 +296,7 @@ const TaskForm = ({ isOpen, onClose, projectId, epicId, task, isEditing, teamMem
   };
 
   // Prepare user options for react-select
+<<<<<<< HEAD
   // Only show fetched team members. If epicTeamMembers prop is provided, filter by those IDs (supports objects or IDs).
   const allowedIds = new Set(
     Array.isArray(epicTeamMembers)
@@ -300,6 +311,12 @@ const TaskForm = ({ isOpen, onClose, projectId, epicId, task, isEditing, teamMem
     value: user._id || user.username,
     label: user.name || user.username || user.email
   }));
+=======
+  const userOptions = users?.map(user => ({
+    value: user._id || user.username,
+    label: user.name || user.username || user.email
+  })) || [];
+>>>>>>> dhruv
 
   const assignedToValue = userOptions.filter(option => 
     formData.assigned_to.includes(option.value)

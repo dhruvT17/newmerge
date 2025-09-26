@@ -131,7 +131,6 @@ export const updateMyTaskStatus = createAsyncThunk(
     }
   }
 );
-
 const taskSlice = createSlice({
   name: 'tasks',
   initialState: {
@@ -292,5 +291,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const { setCurrentTask, clearCurrentTask, clearTasks } = taskSlice.actions;
+export const { setCurrentTask, clearCurrentTask, clearTasks, setTaskStatusLocally } = taskSlice.actions;
 export default taskSlice.reducer;

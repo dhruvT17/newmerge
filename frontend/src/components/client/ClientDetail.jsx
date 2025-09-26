@@ -44,21 +44,33 @@ const ClientDetail = ({ isOpen, onClose, client, onEdit }) => {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-center p-3 rounded-lg   border-[#8BBAFC]/30">
+<<<<<<< HEAD
                   <FaBuilding className="text-[#418EFD] mr-3" />
+=======
+                  {/* <FaBuilding className="text-[#418EFD] mr-3" /> */}
+>>>>>>> dhruv
                   <div>
                     <p className="text-sm text-[#4A4A57]">Client Name</p>
                     <p className="font-medium text-[#2A2A34]">{client.client_name}</p>
                   </div>
                 </div>
                 <div className="flex items-center p-3 rounded-lg   border-[#8BBAFC]/30">
+<<<<<<< HEAD
                   <FaEnvelope className="text-[#418EFD] mr-3" />
+=======
+                  {/* <FaEnvelope className="text-[#418EFD] mr-3" /> */}
+>>>>>>> dhruv
                   <div>
                     <p className="text-sm text-[#4A4A57]">Email</p>
                     <p className="font-medium text-[#2A2A34]">{client.client_contact?.email || 'N/A'}</p>
                   </div>
                 </div>
                 <div className="flex items-center p-3 rounded-lg  border-[#8BBAFC]/30">
+<<<<<<< HEAD
                   <FaPhone className="text-[#418EFD] mr-3" />
+=======
+                  {/* <FaPhone className="text-[#418EFD] mr-3" /> */}
+>>>>>>> dhruv
                   <div>
                     <p className="text-sm text-[#4A4A57]">Phone</p>
                     <p className="font-medium text-[#2A2A34]">{client.client_contact?.phone || 'N/A'}</p>

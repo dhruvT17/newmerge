@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const instance = axios.create({
+<<<<<<< HEAD
   // baseURL: 'https://workfusion.onrender.com/api', // Make sure this matches your backend URL
   baseURL: 'http://localhost:5000/api',
+=======
+  baseURL: 'http://localhost:5000/api', // Make sure this matches your backend URL
+>>>>>>> dhruv
   headers: {
     'Content-Type': 'application/json',
   }
@@ -60,4 +64,8 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
+<<<<<<< HEAD
 export default instance;
+=======
+export default instance; 
+>>>>>>> dhruv

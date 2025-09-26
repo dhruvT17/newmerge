@@ -2,7 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaEdit, FaCalendarAlt, FaUser, FaInfoCircle, FaCheck, FaTimes } from 'react-icons/fa';
 import { useUser } from '../../context/UserContext';
+<<<<<<< HEAD
 import { acceptLeave, rejectLeave, fetchLeaves } from '../../store/leaveStore';
+=======
+import { acceptLeave, rejectLeave } from '../../store/leaveStore';
+>>>>>>> dhruv
 
 const LeaveDetail = ({ isOpen, onClose, leaveId, onEdit }) => {
   const dispatch = useDispatch();
@@ -19,7 +23,10 @@ const LeaveDetail = ({ isOpen, onClose, leaveId, onEdit }) => {
   const handleApprove = async () => {
     try {
       await dispatch(acceptLeave(leaveId)).unwrap();
+<<<<<<< HEAD
       await dispatch(fetchLeaves());
+=======
+>>>>>>> dhruv
       onClose();
     } catch (err) {
       console.error('Failed to approve leave:', err);
@@ -28,10 +35,14 @@ const LeaveDetail = ({ isOpen, onClose, leaveId, onEdit }) => {
 
   const handleReject = async () => {
     try {
+<<<<<<< HEAD
       const remarks = window.prompt('Please provide a reason for rejection:');
       if (remarks === null) return; // cancelled
       await dispatch(rejectLeave({ id: leaveId, admin_remarks: remarks })).unwrap();
       await dispatch(fetchLeaves());
+=======
+      await dispatch(rejectLeave(leaveId)).unwrap();
+>>>>>>> dhruv
       onClose();
     } catch (err) {
       console.error('Failed to reject leave:', err);

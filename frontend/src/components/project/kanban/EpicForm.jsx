@@ -29,6 +29,7 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
   
   // Use Zustand store instead of Redux
   const { users, fetchUsers, isLoading: usersLoading } = useUserStore();
+<<<<<<< HEAD
 
   // Get existing epics for the current project to determine already-assigned members
   const { epics } = useSelector(state => state.kanban);
@@ -57,6 +58,8 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
     }
     return ids;
   }, [epics, isEditing, epic]);
+=======
+>>>>>>> dhruv
   
   const [formData, setFormData] = useState({
     name: '',
@@ -195,12 +198,20 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
   const handleTeamLeadChange = (selectedOption) => {
     setFormData(prev => ({
       ...prev,
+<<<<<<< HEAD
       team_lead_id: selectedOption ? selectedOption.value : '',
       team_members: [] // reset selections when lead changes
     }));
     
     if (selectedOption) {
       setErrors(prev => ({ ...prev, team_lead_id: '', team_members: '' }));
+=======
+      team_lead_id: selectedOption ? selectedOption.value : ''
+    }));
+    
+    if (selectedOption) {
+      setErrors(prev => ({ ...prev, team_lead_id: '' }));
+>>>>>>> dhruv
     } else {
       setErrors(prev => ({
         ...prev,
@@ -350,6 +361,7 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
   };
 
     // Prepare options for select components
+<<<<<<< HEAD
     // Only include users with the \"Project Lead\" role for Team Lead selection
     const projectLeadUsers = users?.filter(
     (user) => (user.credentialId?.role || user.role) === "Project Lead"
@@ -359,6 +371,12 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
     value: user._id || user.username || user.name, // Use ID if available, otherwise username or name
     label: user.name || user.username || user._id,
     }));
+=======
+    const userOptions = users?.map(user => ({
+      value: user._id || user.username || user.name, // Use ID if available, otherwise username or name
+      label: user.name || user.username || user._id
+    })) || [];
+>>>>>>> dhruv
   
     const teamLeadValue = userOptions.find(option => option.value === formData.team_lead_id) || null;
   
@@ -521,6 +539,7 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
                   </label>
                   <Select
                     isMulti
+<<<<<<< HEAD
                     isDisabled={!formData.team_lead_id}
                     options={users
                       ?.filter(user => {
@@ -528,6 +547,9 @@ const EpicForm = ({ isOpen, onClose, projectId, epic, isEditing }) => {
                         return !['Project Manager', 'Project Lead'].includes(user.credentialId?.role || user.role) && !unavailableMemberIds.includes(uid);
                       })
                       .map(user => ({
+=======
+                    options={users.map(user => ({
+>>>>>>> dhruv
                       value: user._id,
                       label: user.name || user.username
                     }))}

@@ -32,7 +32,6 @@ router.patch("/:id/reject", rejectLeave);
 
 // ✅ Update only remarks (optional utility)
 router.patch("/:id/remarks", addRemark);
-
 // Get a single leave request by ID
 router.get("/:id", getLeaveById);
 module.exports = router;

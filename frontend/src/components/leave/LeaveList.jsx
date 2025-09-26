@@ -112,12 +112,15 @@ const LeaveList = ({ leaves, onEditLeave, onApproveLeave, onRejectLeave }) => {
                 <th className="py-4 px-6 text-left font-semibold text-sm text-[#2A2A34] whitespace-nowrap">To</th>
                 <th className="py-4 px-6 text-left font-semibold text-sm text-[#2A2A34] whitespace-nowrap">Duration</th>
                 <th className="py-4 px-6 text-left font-semibold text-sm text-[#2A2A34] whitespace-nowrap">Status</th>
+<<<<<<< HEAD
                 <th className="py-4 px-6 text-left font-semibold text-sm text-[#2A2A34] whitespace-nowrap">
                   <div className="flex items-center space-x-2">
                     <FaInfoCircle className="text-[#418EFD]" />
                     <span>Admin Remarks</span>
                   </div>
                 </th>
+=======
+>>>>>>> dhruv
                 <th className="py-4 px-6 text-left font-semibold text-sm text-[#2A2A34] whitespace-nowrap">Actions</th>
               </tr>
             </thead>
@@ -154,6 +157,7 @@ const LeaveList = ({ leaves, onEditLeave, onApproveLeave, onRejectLeave }) => {
                          leave.status ? leave.status.charAt(0).toUpperCase() + leave.status.slice(1) : 'Pending'}
                       </span>
                     </td>
+<<<<<<< HEAD
                     <td className="py-3 px-4 text-[#4A4A57]">
                       {leave.admin_remarks ? (
                         <div className="max-w-[260px] truncate" title={leave.admin_remarks}>
@@ -163,6 +167,8 @@ const LeaveList = ({ leaves, onEditLeave, onApproveLeave, onRejectLeave }) => {
                         <span className="text-gray-400">—</span>
                       )}
                     </td>
+=======
+>>>>>>> dhruv
                     <td className="py-3 px-4">
                       <div className="flex space-x-3 items-center">
                         <button 
@@ -221,7 +227,11 @@ const LeaveList = ({ leaves, onEditLeave, onApproveLeave, onRejectLeave }) => {
                 ))
               ) : (
                 <tr>
+<<<<<<< HEAD
                   <td colSpan="8" className="py-12 text-center">
+=======
+                  <td colSpan="7" className="py-12 text-center">
+>>>>>>> dhruv
                     <div className="flex flex-col items-center">
                       <FaCalendarAlt className="text-[#418EFD]/30 text-5xl mb-4" />
                       <p className="text-lg font-medium text-[#2A2A34]">No leave requests found</p>

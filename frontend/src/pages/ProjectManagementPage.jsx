@@ -6,21 +6,27 @@ import ProjectList from '../components/project/ProjectList';
 import ProjectForm from '../components/project/ProjectForm';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaProjectDiagram, FaColumns, FaExclamationCircle, FaChartLine } from 'react-icons/fa';
+<<<<<<< HEAD
 import useUserStore from '../store/userStore';
 import useAuthStore from '../store/authStore';
 import axios from '../api/axios';
+=======
+>>>>>>> dhruv
 
 const ProjectManagementPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { projects, isLoading, error } = useSelector((state) => state.projects);
+<<<<<<< HEAD
   const { users, fetchUsers } = useUserStore();
   const { user: authUser } = useAuthStore();
   const isAdmin = authUser?.role === 'Admin';
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedManagerId, setSelectedManagerId] = useState('');
+=======
+>>>>>>> dhruv
   const [showForm, setShowForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState('projects');
@@ -28,6 +34,7 @@ const ProjectManagementPage = () => {
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchClients());
+<<<<<<< HEAD
     if (isAdmin) {
       fetchUsers();
     }
@@ -35,6 +42,11 @@ const ProjectManagementPage = () => {
 
   const handleCreateProject = () => {
     if (!isAdmin) return; // Guard: only Admin can create projects
+=======
+  }, [dispatch]);
+
+  const handleCreateProject = () => {
+>>>>>>> dhruv
     dispatch(clearCurrentProject());
     setIsEditing(false);
     setShowForm(true);
@@ -74,6 +86,7 @@ const ProjectManagementPage = () => {
     <div className="container mx-auto px-6 py-6">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-[#2A2A34]">Project Management</h1>
+<<<<<<< HEAD
         {isAdmin && (
           <button
             onClick={handleCreateProject}
@@ -86,6 +99,17 @@ const ProjectManagementPage = () => {
       </div>
 
 
+=======
+        <button
+          onClick={handleCreateProject}
+          className="bg-[#418EFD] hover:bg-[#307ae3] text-white font-medium py-2.5 px-5 rounded-lg flex items-center transition-colors"
+        >
+          <FaProjectDiagram className="mr-2" />
+          Create New Project
+        </button>
+      </div>
+
+>>>>>>> dhruv
       {/* Navigation Tabs */}
       <div className="mb-6">
         <div className="border-b border-[#8BBAFC]">
@@ -126,11 +150,14 @@ const ProjectManagementPage = () => {
               projects={projects} 
               onEditProject={handleEditProject}
               onOpenKanban={handleOpenKanban}
+<<<<<<< HEAD
               onAssignProject={isAdmin ? ((project) => {
                 setSelectedProject(project);
                 setSelectedManagerId('');
                 setShowAssignModal(true);
               }) : undefined}
+=======
+>>>>>>> dhruv
             />
           )}
           
@@ -230,6 +257,7 @@ const ProjectManagementPage = () => {
         onClose={handleCloseForm}
         isEditing={isEditing}
       />
+<<<<<<< HEAD
 
       {isAdmin && showAssignModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
@@ -294,6 +322,8 @@ const ProjectManagementPage = () => {
           </div>
         </div>
       )}
+=======
+>>>>>>> dhruv
     </div>
   );
 };

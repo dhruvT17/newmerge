@@ -10,7 +10,11 @@ import {
   FaEye 
 } from 'react-icons/fa';
 
+<<<<<<< HEAD
 const TaskCard = ({ task, onViewTask, onEditTask, onDeleteTask, canManageTasks = true }) => {
+=======
+const TaskCard = ({ task, onViewTask, onEditTask, onDeleteTask }) => {
+>>>>>>> dhruv
   // Helper function to get status icon
   const getStatusIcon = (status) => {
     switch(status?.toLowerCase()) {
@@ -60,6 +64,7 @@ const TaskCard = ({ task, onViewTask, onEditTask, onDeleteTask, canManageTasks =
           >
             <FaEye />
           </button>
+<<<<<<< HEAD
           {canManageTasks && (
             <>
               <button 
@@ -78,6 +83,22 @@ const TaskCard = ({ task, onViewTask, onEditTask, onDeleteTask, canManageTasks =
               </button>
             </>
           )}
+=======
+          <button 
+            onClick={() => onEditTask(task)}
+            className="text-[#418EFD] hover:text-[#307ae3] p-1.5 rounded-md hover:bg-blue-50 transition-colors"
+            title="Edit Task"
+          >
+            <FaEdit />
+          </button>
+          <button 
+            onClick={() => onDeleteTask(task._id)}
+            className="text-[#F44336] hover:text-[#d32f2f] p-1.5 rounded-md hover:bg-red-50 transition-colors"
+            title="Delete Task"
+          >
+            <FaTrash />
+          </button>
+>>>>>>> dhruv
         </div>
       </div>
       

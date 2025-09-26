@@ -5,7 +5,11 @@ import { fetchClients } from '../../store/clientStore';
 import { FaEdit, FaTrash, FaEye, FaColumns, FaUser, FaProjectDiagram } from 'react-icons/fa';
 import ProjectDetail from './ProjectDetail';
 
+<<<<<<< HEAD
 const ProjectList = ({ projects, onEditProject, onOpenKanban, onAssignProject }) => {
+=======
+const ProjectList = ({ projects, onEditProject, onOpenKanban }) => {
+>>>>>>> dhruv
   const dispatch = useDispatch();
   const { clients, isLoading: clientsLoading } = useSelector((state) => state.clients);
   const [clientsLoaded, setClientsLoaded] = useState(false);
@@ -177,6 +181,7 @@ const ProjectList = ({ projects, onEditProject, onOpenKanban, onAssignProject })
                       >
                         <FaTrash size={16} />
                       </button>
+<<<<<<< HEAD
                       {onAssignProject && (
                         <button 
                           onClick={() => onAssignProject(project)}
@@ -186,6 +191,8 @@ const ProjectList = ({ projects, onEditProject, onOpenKanban, onAssignProject })
                           <FaUser size={16} />
                         </button>
                       )}
+=======
+>>>>>>> dhruv
                       <button 
                         onClick={() => handleOpenKanban(project)}
                         className="text-[#418EFD] hover:text-[#307ae3] transition-colors p-1.5 hover:bg-[#418EFD]/10 rounded-lg"

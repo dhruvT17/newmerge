@@ -37,7 +37,6 @@ const generateUniqueUsername = async (name = "", email = "") => {
   }
   return candidate;
 };
-
 // ✅ Get all users (Admin-only)
  const getAllUsers = async (req, res) => {
   try {
@@ -109,9 +108,9 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { password, role, name, email } = req.body;
+    const { username: providedUsername, password, role, name, email } = req.body;
 
-    // Validate required fields (username will be auto-generated)
+    // Validate required fields (username can be auto-generated)
     if (!password || !role || !name || !email) {
       return res.status(400).json({ 
         message: "Required fields missing", 
@@ -127,9 +126,8 @@ const createUser = async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate a unique username from the full name or email
-    const username = await generateUniqueUsername(name, email);
-
+    // Determine username
+    const username = providedUsername || await generateUniqueUsername(name, email);
     // Create credentials first
     const credential = new Credentials({
       username,
@@ -177,10 +175,8 @@ const registerUser = async (req, res) => {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
     // Determine username (generate if not provided)
     const username = providedUsername || await generateUniqueUsername(name, email);
-
     // Create Credentials
     const credential = new Credentials({
       username,
@@ -329,14 +325,12 @@ const updateUser = async (req, res) => {
       const arr = toStringArray(skills);
       if (arr) user.skills = arr;
     }
-
     if (profile_picture) {
       user.profile_picture = {
         url: profile_picture.url,
         upload_date: new Date()
       };
     }
-
     // Languages may come nested under preferences or at top-level
     let languagesInput;
     if (preferences && typeof preferences === 'object' && 'languages' in preferences) {
@@ -402,6 +396,94 @@ const reactivateUser = async (req, res) => {
   }
 };
 
+// ✅ Get current authenticated user (by credentialId in token)
+const getMe = async (req, res) => {
+  try {
+    const { credentialId } = req.user || {};
+    if (!credentialId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await User.findOne({ credentialId }).populate(
+      "credentialId",
+      "username role"
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User profile not found" });
+    }
+
+    const hasFaceData = Boolean(
+      user.faceData && (user.faceData.front || user.faceData.left || user.faceData.right)
+    );
+
+    res.json({ user, hasFaceData });
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// ✅ Register or update face data for current user
+const registerFaceData = async (req, res) => {
+  try {
+    console.log("🔍 Face registration request received");
+    console.log("🔍 Request body keys:", Object.keys(req.body || {}));
+    console.log("🔍 Request body size:", JSON.stringify(req.body).length, "characters");
+    
+    const { credentialId } = req.user || {};
+    if (!credentialId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { front, left, right, frontDescriptor, leftDescriptor, rightDescriptor } = req.body || {};
+    if (!front && !left && !right && !frontDescriptor && !leftDescriptor && !rightDescriptor) {
+      return res.status(400).json({ message: "At least one face image must be provided" });
+    }
+
+    // Use findOneAndUpdate to bypass validation issues with existing data
+    const updateData = {
+      faceData: {
+        front: front ?? undefined,
+        left: left ?? undefined,
+        right: right ?? undefined,
+        frontDescriptor: frontDescriptor ?? undefined,
+        leftDescriptor: leftDescriptor ?? undefined,
+        rightDescriptor: rightDescriptor ?? undefined,
+      }
+    };
+
+    // Only include fields that are provided
+    Object.keys(updateData.faceData).forEach(key => {
+      if (updateData.faceData[key] === undefined) {
+        delete updateData.faceData[key];
+      }
+    });
+
+    console.log("🔍 Updating face data with:", updateData);
+
+    const user = await User.findOneAndUpdate(
+      { credentialId },
+      { $set: updateData },
+      { 
+        new: true, 
+        runValidators: false, // Disable validation to avoid skills field issues
+        upsert: false 
+      }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User profile not found" });
+    }
+
+    console.log("🔍 Face data updated successfully for user:", user._id);
+
+    res.json({ message: "Face data saved", faceData: user.faceData });
+  } catch (error) {
+    console.error("❌ Error saving face data:", error);
+    console.error("❌ Error stack:", error.stack);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 module.exports = {
   getAllUsers,
   getUserById,
@@ -411,5 +493,7 @@ module.exports = {
   updateUser,
   deactivateUser,
   reactivateUser,
+  getMe,
+  registerFaceData,
   // deleteUser, // Remove or comment out this line
 };

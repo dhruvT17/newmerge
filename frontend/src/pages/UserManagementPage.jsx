@@ -214,6 +214,7 @@ const UserManagementPage = () => {
                       <tr key={user?._id || Math.random().toString()} className="hover:bg-[#418EFD]/5 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
+<<<<<<< HEAD
                             {user?.profile_picture?.url ? (
                               <img
                                 src={user.profile_picture.url}
@@ -225,6 +226,8 @@ const UserManagementPage = () => {
                                 {(user?.name || user?.credentialId?.username || user?.username || 'U').charAt(0).toUpperCase()}
                               </div>
                             )}
+=======
+>>>>>>> dhruv
                             <div className="text-sm font-medium text-[#2A2A34]">
                               {user?.name || user?.credentialId?.name || user?.credentialId?.username || user?.username}
                             </div>
@@ -539,7 +542,11 @@ const UserManagementPage = () => {
                     <div>
                       <label className="text-sm text-[#4A4A57] block mb-1">Email</label>
                       <div className="flex items-center text-[#2A2A34]">
+<<<<<<< HEAD
                         <FaEnvelope className="text-[#418EFD] mr-2" />
+=======
+                        {/* <FaEnvelope className="text-[#418EFD] mr-2" /> */}
+>>>>>>> dhruv
                         {viewUser?.email}
                         {viewUser?.email_verified && (
                           <span className="ml-2 text-green-600 text-xs flex items-center">
@@ -555,10 +562,23 @@ const UserManagementPage = () => {
                     <div>
                       <label className="text-sm text-[#4A4A57] block mb-1">Contact Number</label>
                       <div className="flex items-center text-[#2A2A34]">
+<<<<<<< HEAD
                         <FaPhone className="text-[#418EFD] mr-2" />
                         {viewUser?.contact_number || 'N/A'}
                       </div>
                     </div>
+=======
+                        {/* <FaPhone className="text-[#418EFD] mr-2" /> */}
+                        {viewUser?.contact_number || 'N/A'}
+                      </div>
+                    </div>
+
+                    {/* Address Section */}
+                    <div>
+                      <label className="text-sm text-[#4A4A57] block mb-1">Address</label>
+                      <div className="text-[#2A2A34]">{viewUser?.address || 'N/A'}</div>
+                    </div>
+>>>>>>> dhruv
                   </div>
 
                   <div className="space-y-4">
@@ -587,6 +607,36 @@ const UserManagementPage = () => {
                         </span>
                       </div>
                     </div>
+<<<<<<< HEAD
+=======
+
+                    {/* Skills Section */}
+                    <div>
+                      <label className="text-sm text-[#4A4A57] block mb-1">Skills</label>
+                      <div className="flex flex-wrap gap-2 mt-1">
+                        {(() => {
+                          const skills = viewUser?.skills;
+                          if (!skills || (Array.isArray(skills) && skills.length === 0) || (typeof skills === 'string' && skills.trim() === '')) {
+                            return <span className="text-[#2A2A34]">N/A</span>;
+                          }
+                          let skillList = [];
+                          if (Array.isArray(skills)) {
+                            // Flatten in case of nested arrays
+                            skillList = skills.flat().filter(Boolean);
+                          } else if (typeof skills === 'string') {
+                            // Split by comma if it's a string
+                            skillList = skills.split(',').map(s => s.trim()).filter(Boolean);
+                          }
+                          if (skillList.length === 0) {
+                            return <span className="text-[#2A2A34]">N/A</span>;
+                          }
+                          return skillList.map((skill, idx) => (
+                            <span key={idx} className="bg-[#418EFD]/10 text-[#418EFD] px-2 py-1 rounded text-xs border border-[#418EFD]/20">{skill}</span>
+                          ));
+                        })()}
+                      </div>
+                    </div>
+>>>>>>> dhruv
                   </div>
                 </div>
               </div>

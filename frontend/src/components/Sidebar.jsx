@@ -70,6 +70,7 @@ const Sidebar = () => {
     { path: '/project-management', label: 'Project Management', icon: <FaProjectDiagram className="mr-3 text-xl" /> },
     { path: '/client-management', label: 'Client Management', icon: <FaBuilding className="mr-3 text-xl" /> },
     { path: '/leave-management', label: 'Leave Management', icon: <FaCalendarAlt className="mr-3 text-xl" /> },
+    { path: '/admin/attendance', label: 'Attendance Records', icon: <FaClock className="mr-3 text-xl" /> },
   ];
 
   const projectManagerLinks = [
@@ -90,6 +91,7 @@ const Sidebar = () => {
     { path: '/dashboard', label: 'Dashboard', icon: <FaHome className="mr-3 text-xl" /> },
     { path: '/tasks', label: 'My Tasks', icon: <FaTasks className="mr-3 text-xl" /> },
     { path: '/leave-management', label: 'Leave Requests', icon: <FaCalendarAlt className="mr-3 text-xl" /> },
+    { path: '/attendance', label: 'Check In/Out', icon: <FaClock className="mr-3 text-xl" /> },
     { path: '/profile', label: 'Profile', icon: <FaUser className="mr-3 text-xl" /> },
   ];
 
@@ -107,7 +109,6 @@ const Sidebar = () => {
         return employeeLinks;
     }
   };
-
   return (
     <div className={`${isCollapsed ? 'w-20' : 'w-64 md:w-80'} h-full bg-white text-blue-900 shadow-xl transition-all duration-300 relative`}>
       <div className="flex justify-between items-center p-4 border-b border-blue-100">

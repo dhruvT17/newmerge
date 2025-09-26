@@ -16,6 +16,9 @@ import ClientManagementPage from './pages/ClientManagementPage';
 import LeaveManagementPage from './pages/LeaveManagementPage'; // ✅ correct
 import NotFound from './pages/NotFound';
 import Test from './pages/Test';
+import FaceRegistration from './components/FaceRegistration';
+import AttendancePage from './pages/AttendancePage';
+import AdminAttendancePage from './pages/AdminAttendancePage';
 
 // Component imports
 import KanbanBoard from './components/project/kanban/KanbanBoard';
@@ -33,6 +36,8 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/face-register" element={<FaceRegistration />} />
+          <Route path="/attendance" element={<AttendancePage />} />
           <Route path="/user-management" element={<UserManagementPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/project-management" element={<ProjectManagementPage />} />
@@ -41,7 +46,7 @@ const AppContent = () => {
           <Route path="/project/:projectId/kanban" element={<KanbanBoard />} />
           <Route path="/project-lead/epics" element={<ProjectLeadEpicsView />} />
           <Route path="/tasks" element={<EmployeeTasks />} />
-          <Route path="/time-tracking" element={<NotFound />} />
+          <Route path="/admin/attendance" element={<AdminAttendancePage />} />
           <Route path="/projects" element={<NotFound />} />
           <Route path="/test" element={<Test />} />
           <Route path="*" element={<NotFound />} />

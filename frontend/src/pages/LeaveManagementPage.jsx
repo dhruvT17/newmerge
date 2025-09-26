@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+<<<<<<< HEAD
 import { fetchLeaves, acceptLeave, rejectLeave, setCurrentLeave, clearCurrentLeave } from '../store/leaveStore';
+=======
+import { fetchLeaves, updateLeave, setCurrentLeave, clearCurrentLeave } from '../store/leaveStore';
+>>>>>>> dhruv
 import LeaveList from '../components/leave/LeaveList';
 import LeaveForm from '../components/leave/LeaveForm';
 import LeaveDetail from '../components/leave/LeaveDetail';
@@ -23,6 +27,7 @@ const LeaveManagementPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (!leaves) return;
 
     // Base list (by role)
@@ -58,6 +63,50 @@ const LeaveManagementPage = () => {
     if (remarks !== null) {
       await dispatch(rejectLeave({ id, admin_remarks: remarks }));
       await dispatch(fetchLeaves());
+=======
+    if (leaves) {
+      if (isAdmin) {
+        // Admin sees all leaves
+        if (filterStatus === 'all') {
+          setFilteredLeaves(leaves);
+        } else {
+          setFilteredLeaves(leaves.filter(leave => leave.status === filterStatus));
+        }
+      } else {
+        // Regular users only see their own leaves
+        const userLeaves = leaves.filter(leave => leave.user_id === user?.userId);
+        if (filterStatus === 'all') {
+          setFilteredLeaves(userLeaves);
+        } else {
+          setFilteredLeaves(userLeaves.filter(leave => leave.status === filterStatus));
+        }
+      }
+    }
+  }, [leaves, filterStatus, isAdmin, user]);
+
+  const handleApproveLeave = (id) => {
+    if (window.confirm('Are you sure you want to approve this leave request?')) {
+      dispatch(updateLeave({ 
+        id, 
+        leaveData: { 
+          status: 'Approved',
+          admin_remarks: 'Approved by admin'
+        } 
+      }));
+    }
+  };
+
+  const handleRejectLeave = (id) => {
+    const remarks = window.prompt('Please provide a reason for rejection:');
+    if (remarks) {
+      dispatch(updateLeave({ 
+        id, 
+        leaveData: { 
+          status: 'Rejected',
+          admin_remarks: remarks
+        } 
+      }));
+>>>>>>> dhruv
     }
   };
 
@@ -157,4 +206,8 @@ const LeaveManagementPage = () => {
   );
 };
 
+<<<<<<< HEAD
 export default LeaveManagementPage;
+=======
+export default LeaveManagementPage;
+>>>>>>> dhruv

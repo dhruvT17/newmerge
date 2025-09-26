@@ -1,4 +1,4 @@
-  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../api/axios';
 import useAuthStore from './authStore';
 
@@ -9,7 +9,6 @@ const normalizeStatus = (status) => {
   if (s === 'rejected') return 'Rejected';
   return 'Pending';
 };
-
 // Async thunks for API calls
 export const fetchLeaves = createAsyncThunk(
   'leaves/fetchLeaves',
@@ -218,7 +217,6 @@ const leaveSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch all
       .addCase(fetchLeaves.pending, (state) => {
         state.isLoading = true;
         state.error = null;

@@ -1,13 +1,20 @@
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from 'react';
 import axiosInstance from '../api/axios';
 import { FaPaperPlane, FaSpinner, FaRobot, FaExclamationCircle, FaSearch, FaUser } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+=======
+import React, { useState } from 'react';
+import axiosInstance from '../api/axios';
+import { FaPaperPlane, FaSpinner, FaRobot, FaExclamationCircle, FaSearch } from 'react-icons/fa';
+>>>>>>> dhruv
 
 const ChatComponent = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [chatHistory, setChatHistory] = useState([]);
+<<<<<<< HEAD
   const [suggestions, setSuggestions] = useState([
     'Find active users who know React',
     'Show me high priority projects',
@@ -72,10 +79,35 @@ const ChatComponent = () => {
       });
       
       setError(err.response?.data?.message || err.response?.data?.error || 'Failed to get response');
+=======
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const result = await axiosInstance.post('/chatbot', {
+        message
+      });
+      
+      const newChat = {
+        query: message,
+        data: result.data.data,
+        message: result.data.message,
+        timestamp: new Date()
+      };
+      
+      setChatHistory(prev => [...prev, newChat]);
+      setMessage('');
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to get response');
+>>>>>>> dhruv
     } finally {
       setIsLoading(false);
     }
   };
+<<<<<<< HEAD
   
   // Handle suggestion click
   const handleSuggestionClick = (suggestion) => {
@@ -169,11 +201,54 @@ const ChatComponent = () => {
     };
     
     return statusColors[status.toLowerCase()] || 'bg-gray-100 text-gray-800';
+=======
+
+  const renderTableHeaders = (data) => {
+    if (!data || data.length === 0) return null;
+    // Get the first item to determine available fields
+    const fields = Object.keys(data[0]);
+    return (
+      <tr>
+        {fields.map((field) => (
+          <th key={field} className="px-4 py-2 text-left text-xs font-semibold text-[#2A2A34] tracking-wider border-b">
+            {field.charAt(0).toUpperCase() + field.slice(1).replace(/_/g, ' ')}
+          </th>
+        ))}
+      </tr>
+    );
+  };
+
+  const renderTableRow = (item, idx) => {
+    if (!item) return null;
+    const fields = Object.keys(item);
+    return (
+      <tr key={idx} className="hover:bg-[#418EFD]/5 transition-colors">
+        {fields.map((field) => (
+          <td key={field} className="px-4 py-2 text-xs text-[#4A4A57] whitespace-normal break-words">
+            {field === 'status' ? (
+              <span className={`px-2 py-1 rounded-full ${
+                item[field] === 'active' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-red-100 text-red-800'
+              }`}>
+                {item[field]}
+              </span>
+            ) : field === 'skills' ? (
+              Array.isArray(item[field]) ? item[field].join(', ') : item[field]
+            ) : (
+              item[field]
+            )}
+          </td>
+        ))}
+      </tr>
+    );
+>>>>>>> dhruv
   };
 
   return (
     <div className="bg-white h-full flex flex-col">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+<<<<<<< HEAD
         {/* Welcome message if no chat history */}
         {chatHistory.length === 0 && (
           <motion.div 
@@ -264,6 +339,32 @@ const ChatComponent = () => {
         <div ref={chatEndRef} />
 
         {/* Error message */}
+=======
+        {chatHistory.map((chat, index) => (
+          <div key={index} className="space-y-4">
+            <div className="flex items-start space-x-2">
+              <div className="bg-[#418EFD]/10 rounded-lg py-3 px-4 max-w-[90%]">
+                <p className="text-[#2A2A34] text-sm">{chat.query}</p>
+              </div>
+            </div>
+            <div className="bg-gray-50 rounded-lg border border-[#8BBAFC]/30 p-4">
+              {chat.data && chat.data.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-[#418EFD]/10">
+                      {renderTableHeaders(chat.data)}
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {chat.data.map((item, idx) => renderTableRow(item, idx))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+
+>>>>>>> dhruv
         {error && (
           <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg flex items-center border border-red-200">
             <FaExclamationCircle className="mr-2" />
@@ -276,11 +377,16 @@ const ChatComponent = () => {
       <div className="p-4 border-t border-[#8BBAFC]/30">
         <form onSubmit={handleSubmit} className="flex space-x-2">
           <div className="relative flex-1">
+<<<<<<< HEAD
             <FaRobot className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8BBAFC]" />
+=======
+            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8BBAFC]" />
+>>>>>>> dhruv
             <input
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+<<<<<<< HEAD
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSubmit(e)}
               placeholder="Ask me anything about users, projects, tasks, or clients..."
               className="w-full pl-10 pr-4 py-3 text-sm border border-[#8BBAFC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#418EFD]/50 bg-white hover:bg-gray-50/80 transition-colors"
@@ -294,15 +400,31 @@ const ChatComponent = () => {
             className="px-4 py-3 bg-[#418EFD] text-white rounded-lg hover:bg-[#307ae3] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+=======
+              placeholder="Search users..."
+              className="w-full pl-10 pr-4 py-2 text-sm border border-[#8BBAFC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#418EFD]/50 bg-white hover:bg-gray-50/80 transition-colors"
+              disabled={isLoading}
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isLoading || !message.trim()}
+            className="px-4 py-2 bg-[#418EFD] text-white rounded-lg hover:bg-[#307ae3] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+>>>>>>> dhruv
           >
             {isLoading ? (
               <>
                 <FaSpinner className="animate-spin" />
+<<<<<<< HEAD
                 <span className="text-sm">Processing...</span>
+=======
+                <span className="text-sm">Searching...</span>
+>>>>>>> dhruv
               </>
             ) : (
               <>
                 <FaPaperPlane className="text-sm" />
+<<<<<<< HEAD
                 <span className="text-sm">Send</span>
               </>
             )}
@@ -328,6 +450,13 @@ const ChatComponent = () => {
             </div>
           </div>
         )}
+=======
+                <span className="text-sm">Search</span>
+              </>
+            )}
+          </button>
+        </form>
+>>>>>>> dhruv
       </div>
     </div>
   );
